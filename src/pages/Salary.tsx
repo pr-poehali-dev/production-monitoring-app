@@ -33,6 +33,7 @@ const Salary = () => {
   const [settings, setSettings] = useState<SalarySettings>(loadSettings);
   const [newName, setNewName] = useState('');
   const [saved, setSaved] = useState(false);
+  const [uniformPrice, setUniformPrice] = useState('');
 
   useEffect(() => {
     saveSettings(settings);
@@ -77,6 +78,15 @@ const Salary = () => {
       rates: prev.rates.map((r) =>
         r.productName === productName ? { ...r, [field]: Math.max(0, value) } : r
       ),
+    }));
+  };
+
+  const applyUniformPrice = () => {
+    const price = parseFloat(uniformPrice);
+    if (isNaN(price) || price < 0) return;
+    setSettings((prev) => ({
+      ...prev,
+      rates: prev.rates.map((r) => ({ ...r, rate10: price, rate8: price })),
     }));
   };
 
@@ -235,7 +245,33 @@ const Salary = () => {
         <div className="space-y-3">
           <div className="flex items-center gap-2 mb-1">
             <Icon name="Tag" size={15} className="text-muted-foreground" />
-            <span className="text-sm font-semibold text-foreground">Ставки за изделие</span>
+            <span className="text-sm font-semibold text-foreground">Цена за изделие</span>
+          </div>
+
+          {/* Единая цена */}
+          <div className="bg-card border border-border rounded-lg px-4 py-3 flex flex-col gap-2">
+            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Единая цена для всех изделий</p>
+            <div className="flex gap-2 items-center">
+              <input
+                type="number"
+                min={0}
+                step={0.5}
+                placeholder="0.00"
+                className="mono text-sm w-28 bg-background border border-border rounded-md px-3 py-1.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                value={uniformPrice}
+                onChange={(e) => setUniformPrice(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && applyUniformPrice()}
+              />
+              <span className="text-sm text-muted-foreground">₽</span>
+              <button
+                onClick={applyUniformPrice}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-xs font-medium hover:opacity-90 transition-opacity"
+              >
+                <Icon name="Check" size={13} />
+                Применить ко всем
+              </button>
+            </div>
+            <p className="text-xs text-muted-foreground">Заполняет одновременно «На 10 рамок» и «На 8 рамок» для каждой позиции</p>
           </div>
 
           <div className="bg-card border border-border rounded-lg overflow-hidden">
