@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useProductionData } from '@/hooks/useProductionData';
 import WorkspaceCard from '@/components/WorkspaceCard';
 import Icon from '@/components/ui/icon';
@@ -9,11 +10,12 @@ const WORKSPACE_COLORS = [
   '280 60% 58%',
 ];
 
-const getTodayFormatted = () => {
-  return new Date().toLocaleDateString('ru-RU', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+const getTodayKey = () => new Date().toISOString().split('T')[0];
+
+const formatDateLong = (iso: string) =>
+  new Date(iso + 'T00:00:00').toLocaleDateString('ru-RU', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   });
-};
 
 const Dashboard = () => {
   const {
@@ -27,6 +29,10 @@ const Dashboard = () => {
     getGrandTotal,
   } = useProductionData();
 
+  const today = getTodayKey();
+  const [selectedDate, setSelectedDate] = useState(today);
+  const isToday = selectedDate === today;
+
   const grandTotal = getGrandTotal();
 
   return (
@@ -34,23 +40,58 @@ const Dashboard = () => {
       {/* Top bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">
-            {getTodayFormatted()}
-          </p>
-          <h1 className="text-xl font-semibold text-foreground">Панель управления</h1>
+          {/* Кликабельная дата с input[type=date] */}
+          <div className="flex items-center gap-2 mb-1 group">
+            <p className="text-xs text-muted-foreground uppercase tracking-widest">
+              {formatDateLong(selectedDate)}
+            </p>
+            {!isToday && (
+              <span className="tag bg-amber-500/15 text-amber-400 text-[9px]">не сегодня</span>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-semibold text-foreground">Панель управления</h1>
+            <div className="relative">
+              <button
+                className="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors border border-transparent hover:border-border"
+                onClick={() => (document.getElementById('dash-date-input') as HTMLInputElement)?.showPicker?.()}
+                title="Выбрать дату"
+              >
+                <Icon name="CalendarDays" size={13} />
+                {isToday ? 'Сегодня' : selectedDate}
+              </button>
+              <input
+                id="dash-date-input"
+                type="date"
+                max={today}
+                value={selectedDate}
+                onChange={(e) => { if (e.target.value) setSelectedDate(e.target.value); }}
+                className="absolute inset-0 opacity-0 w-full cursor-pointer"
+              />
+            </div>
+            {!isToday && (
+              <button
+                onClick={() => setSelectedDate(today)}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                title="Вернуться к сегодня"
+              >
+                <Icon name="RotateCcw" size={12} />
+              </button>
+            )}
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex flex-col items-end">
-            <span className="text-xs text-muted-foreground">Итого сегодня</span>
+            <span className="text-xs text-muted-foreground">Итого</span>
             <span className="mono text-2xl font-semibold text-primary">{grandTotal.toLocaleString('ru-RU')} ед.</span>
           </div>
           <div className="w-px h-10 bg-border" />
           <button
-            onClick={saveDay}
+            onClick={() => saveDay(selectedDate)}
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
             <Icon name="Save" size={15} />
-            Сохранить день
+            {isToday ? 'Сохранить день' : 'Сохранить за ' + new Date(selectedDate + 'T00:00:00').toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })}
           </button>
           <button
             onClick={resetDay}

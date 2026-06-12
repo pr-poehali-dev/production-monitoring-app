@@ -87,14 +87,14 @@ export const useProductionData = () => {
     );
   };
 
-  const saveDay = () => {
-    const today = getTodayKey();
-    const record: DayRecord = { date: today, workspaces: JSON.parse(JSON.stringify(workspaces)) };
+  const saveDay = (date?: string) => {
+    const key = date || getTodayKey();
+    const record: DayRecord = { date: key, workspaces: JSON.parse(JSON.stringify(workspaces)) };
     setHistory((prev) => {
-      const filtered = prev.filter((d) => d.date !== today);
-      return [record, ...filtered].slice(0, 90);
+      const filtered = prev.filter((d) => d.date !== key);
+      return [record, ...filtered].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 90);
     });
-    setLastSaved(today);
+    setLastSaved(key);
   };
 
   const resetDay = () => {
