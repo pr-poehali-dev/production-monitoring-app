@@ -1,15 +1,126 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { ActivePage } from '@/types/production';
+import Icon from '@/components/ui/icon';
+import Dashboard from './Dashboard';
+import Statistics from './Statistics';
+import History from './History';
+import Settings from './Settings';
+import ExportPage from './ExportPage';
+
+const NAV_ITEMS: { id: ActivePage; label: string; icon: string }[] = [
+  { id: 'dashboard', label: 'Панель', icon: 'LayoutDashboard' },
+  { id: 'statistics', label: 'Статистика', icon: 'BarChart2' },
+  { id: 'history', label: 'История', icon: 'Archive' },
+  { id: 'export', label: 'Экспорт', icon: 'Download' },
+  { id: 'settings', label: 'Настройки', icon: 'Settings' },
+];
 
 const Index = () => {
+  const [page, setPage] = useState<ActivePage>('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const renderPage = () => {
+    switch (page) {
+      case 'dashboard': return <Dashboard />;
+      case 'statistics': return <Statistics />;
+      case 'history': return <History />;
+      case 'export': return <ExportPage />;
+      case 'settings': return <Settings />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
+    <div className="min-h-screen bg-background grid-bg flex">
+      {/* Sidebar */}
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-40 w-56 bg-card border-r border-border flex flex-col
+          transition-transform duration-300
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          md:relative md:translate-x-0 md:flex
+        `}
+      >
+        {/* Logo */}
+        <div className="px-5 py-5 border-b border-border">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded bg-primary flex items-center justify-center">
+              <Icon name="Factory" size={14} className="text-primary-foreground" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-foreground tracking-wide leading-none">ПРОИЗВОДСТВО</p>
+              <p className="text-[10px] text-muted-foreground tracking-widest uppercase leading-none mt-0.5">Контроль</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-4 space-y-1">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => { setPage(item.id); setSidebarOpen(false); }}
+              className={`nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium border-l-2 ${
+                page === item.id
+                  ? 'active border-primary bg-primary/10 text-primary'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Icon name={item.icon} size={16} />
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        {/* Footer */}
+        <div className="px-5 py-4 border-t border-border">
+          <p className="text-[10px] text-muted-foreground tracking-widest uppercase">v1.0.0 · 4 рабочих места</p>
+        </div>
+      </aside>
+
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Top bar mobile */}
+        <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border bg-card">
+          <button onClick={() => setSidebarOpen(true)} className="text-muted-foreground hover:text-foreground">
+            <Icon name="Menu" size={20} />
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-5 rounded bg-primary flex items-center justify-center">
+              <Icon name="Factory" size={10} className="text-primary-foreground" />
+            </div>
+            <span className="text-sm font-bold tracking-wide">ПРОИЗВОДСТВО</span>
+          </div>
+          <div className="w-8" />
+        </header>
+
+        {/* Desktop top bar */}
+        <header className="hidden md:flex items-center justify-between px-8 py-4 border-b border-border bg-card/50 backdrop-blur-sm">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground uppercase tracking-widest">
+              {NAV_ITEMS.find((n) => n.id === page)?.label}
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              Онлайн · данные сохраняются локально
+            </div>
+          </div>
+        </header>
+
+        {/* Content */}
+        <main className="flex-1 px-4 md:px-8 py-6 overflow-y-auto">
+          {renderPage()}
+        </main>
       </div>
-      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 inline-block bg-[#FF6637] text-white text-sm px-4 py-2 rounded-full whitespace-nowrap">
-        Подождите 5 минут, Юра создает первую версию проекта с нуля
-      </span>
     </div>
   );
 };
