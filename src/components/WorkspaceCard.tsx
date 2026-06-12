@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Workspace } from '@/types/production';
-import Icon from '@/components/ui/icon';
 
 interface Props {
   workspace: Workspace;
@@ -35,11 +34,9 @@ const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, co
               {workspace.name}
             </span>
           </div>
-          <Icon
-            name={expanded ? 'ChevronUp' : 'ChevronDown'}
-            size={16}
-            className="text-muted-foreground group-hover:text-foreground transition-colors"
-          />
+          <span className="text-muted-foreground group-hover:text-foreground transition-colors text-sm">
+            {expanded ? '▲' : '▼'}
+          </span>
         </div>
         <div className="flex items-end gap-2">
           <span className="value-display" style={{ color: `hsl(${colorVar})` }}>
@@ -74,11 +71,7 @@ const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, co
                     onClick={(e) => { e.stopPropagation(); onToggleCollapse(pi); }}
                   >
                     <div className="flex items-center gap-2">
-                      <Icon
-                        name={product.collapsed ? 'ChevronRight' : 'ChevronDown'}
-                        size={14}
-                        className="text-muted-foreground"
-                      />
+                      <span className="text-muted-foreground text-xs">{product.collapsed ? '▶' : '▼'}</span>
                       <span className="text-sm font-semibold text-foreground">{product.name}</span>
                     </div>
                     <span
@@ -97,13 +90,13 @@ const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, co
                           <span className="text-xs text-muted-foreground flex-1">{sub.label}</span>
                           <div className="flex items-center gap-2">
                             <button
-                              className="w-6 h-6 rounded flex items-center justify-center bg-secondary hover:bg-border transition-colors text-foreground"
+                              className="w-6 h-6 rounded flex items-center justify-center bg-secondary hover:bg-border transition-colors text-foreground text-sm"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 onUpdateSubItem(pi, si, sub.value - 1);
                               }}
                             >
-                              <Icon name="Minus" size={12} />
+                              −
                             </button>
                             <input
                               className="mono text-sm w-14 text-center bg-background border border-border rounded px-1 py-0.5 text-foreground focus:outline-none focus:border-primary"
@@ -115,13 +108,13 @@ const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, co
                               }}
                             />
                             <button
-                              className="w-6 h-6 rounded flex items-center justify-center bg-secondary hover:bg-border transition-colors text-foreground"
+                              className="w-6 h-6 rounded flex items-center justify-center bg-secondary hover:bg-border transition-colors text-foreground text-sm"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 onUpdateSubItem(pi, si, sub.value + 1);
                               }}
                             >
-                              <Icon name="Plus" size={12} />
+                              +
                             </button>
                           </div>
                         </div>

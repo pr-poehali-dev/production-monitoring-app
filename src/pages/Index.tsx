@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { ActivePage } from '@/types/production';
-import Icon from '@/components/ui/icon';
 import Dashboard from './Dashboard';
 import Statistics from './Statistics';
 import History from './History';
 import Settings from './Settings';
 import ExportPage from './ExportPage';
 
-const NAV_ITEMS: { id: ActivePage; label: string; icon: string }[] = [
-  { id: 'dashboard', label: 'Панель', icon: 'LayoutDashboard' },
-  { id: 'statistics', label: 'Статистика', icon: 'BarChart2' },
-  { id: 'history', label: 'История', icon: 'Archive' },
-  { id: 'export', label: 'Экспорт', icon: 'Download' },
-  { id: 'settings', label: 'Настройки', icon: 'Settings' },
+const NAV_ITEMS: { id: ActivePage; label: string; emoji: string }[] = [
+  { id: 'dashboard', label: 'Панель', emoji: '🐝' },
+  { id: 'statistics', label: 'Статистика', emoji: '📊' },
+  { id: 'history', label: 'История', emoji: '🗂️' },
+  { id: 'export', label: 'Экспорт', emoji: '📥' },
+  { id: 'settings', label: 'Настройки', emoji: '⚙️' },
 ];
 
 const Index = () => {
@@ -43,9 +42,7 @@ const Index = () => {
         {/* Logo */}
         <div className="px-5 py-5 border-b border-border">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded bg-primary flex items-center justify-center">
-              <Icon name="Factory" size={14} className="text-primary-foreground" />
-            </div>
+            <span className="text-2xl leading-none">🍯</span>
             <div>
               <p className="text-xs font-bold text-foreground tracking-wide leading-none">ПРОИЗВОДСТВО</p>
               <p className="text-[10px] text-muted-foreground tracking-widest uppercase leading-none mt-0.5">Контроль</p>
@@ -65,7 +62,7 @@ const Index = () => {
                   : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
-              <Icon name={item.icon} size={16} />
+              <span className="text-base leading-none">{item.emoji}</span>
               {item.label}
             </button>
           ))}
@@ -89,13 +86,11 @@ const Index = () => {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar mobile */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border bg-card">
-          <button onClick={() => setSidebarOpen(true)} className="text-muted-foreground hover:text-foreground">
-            <Icon name="Menu" size={20} />
+          <button onClick={() => setSidebarOpen(true)} className="text-muted-foreground hover:text-foreground text-xl">
+            ☰
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-primary flex items-center justify-center">
-              <Icon name="Factory" size={10} className="text-primary-foreground" />
-            </div>
+            <span className="text-lg">🍯</span>
             <span className="text-sm font-bold tracking-wide">ПРОИЗВОДСТВО</span>
           </div>
           <div className="w-8" />

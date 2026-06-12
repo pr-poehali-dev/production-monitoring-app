@@ -3,10 +3,10 @@ import WorkspaceCard from '@/components/WorkspaceCard';
 import Icon from '@/components/ui/icon';
 
 const WORKSPACE_COLORS = [
-  '199 89% 48%',
-  '159 60% 45%',
-  '38 92% 50%',
-  '280 60% 58%',
+  '43 95% 54%',
+  '34 88% 50%',
+  '28 78% 44%',
+  '19 68% 38%',
 ];
 
 const getTodayFormatted = () => {
@@ -48,21 +48,20 @@ const Dashboard = () => {
             onClick={saveDay}
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            <Icon name="Save" size={15} />
+            <span>🍯</span>
             Сохранить день
           </button>
           <button
             onClick={resetDay}
             className="flex items-center gap-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-border transition-colors"
           >
-            <Icon name="RotateCcw" size={15} />
+            <span>🔄</span>
           </button>
         </div>
       </div>
 
-      {/* Workspace grid: 2 cols */}
+      {/* Workspace grid: WS1 top-left | WS2 top-right | WS3 bottom-left | WS4 bottom-right */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Row 1: WS1 (top-left) | WS3 (top-right) */}
         <WorkspaceCard
           workspace={workspaces[0]}
           total={getTotalForWorkspace(workspaces[0])}
@@ -71,19 +70,18 @@ const Dashboard = () => {
           colorVar={WORKSPACE_COLORS[0]}
         />
         <WorkspaceCard
-          workspace={workspaces[2]}
-          total={getTotalForWorkspace(workspaces[2])}
-          onUpdateSubItem={(pi, si, v) => updateSubItem(3, pi, si, v)}
-          onToggleCollapse={(pi) => toggleProductCollapse(3, pi)}
-          colorVar={WORKSPACE_COLORS[2]}
-        />
-        {/* Row 2: WS2 (bottom-left) | WS4 (bottom-right) */}
-        <WorkspaceCard
           workspace={workspaces[1]}
           total={getTotalForWorkspace(workspaces[1])}
           onUpdateSubItem={(pi, si, v) => updateSubItem(2, pi, si, v)}
           onToggleCollapse={(pi) => toggleProductCollapse(2, pi)}
           colorVar={WORKSPACE_COLORS[1]}
+        />
+        <WorkspaceCard
+          workspace={workspaces[2]}
+          total={getTotalForWorkspace(workspaces[2])}
+          onUpdateSubItem={(pi, si, v) => updateSubItem(3, pi, si, v)}
+          onToggleCollapse={(pi) => toggleProductCollapse(3, pi)}
+          colorVar={WORKSPACE_COLORS[2]}
         />
         <WorkspaceCard
           workspace={workspaces[3]}
