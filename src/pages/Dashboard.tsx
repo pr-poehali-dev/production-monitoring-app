@@ -20,6 +20,7 @@ const Dashboard = () => {
     workspaces,
     updateSubItem,
     toggleProductCollapse,
+    toggleAllProductsCollapse,
     saveDay,
     resetDay,
     getTotalForWorkspace,
@@ -67,6 +68,7 @@ const Dashboard = () => {
           total={getTotalForWorkspace(workspaces[0])}
           onUpdateSubItem={(pi, si, v) => updateSubItem(1, pi, si, v)}
           onToggleCollapse={(pi) => toggleProductCollapse(1, pi)}
+          onToggleAllCollapse={(c) => toggleAllProductsCollapse(1, c)}
           colorVar={WORKSPACE_COLORS[0]}
         />
         <WorkspaceCard
@@ -74,6 +76,7 @@ const Dashboard = () => {
           total={getTotalForWorkspace(workspaces[1])}
           onUpdateSubItem={(pi, si, v) => updateSubItem(2, pi, si, v)}
           onToggleCollapse={(pi) => toggleProductCollapse(2, pi)}
+          onToggleAllCollapse={(c) => toggleAllProductsCollapse(2, c)}
           colorVar={WORKSPACE_COLORS[1]}
         />
         <WorkspaceCard
@@ -81,6 +84,7 @@ const Dashboard = () => {
           total={getTotalForWorkspace(workspaces[2])}
           onUpdateSubItem={(pi, si, v) => updateSubItem(3, pi, si, v)}
           onToggleCollapse={(pi) => toggleProductCollapse(3, pi)}
+          onToggleAllCollapse={(c) => toggleAllProductsCollapse(3, c)}
           colorVar={WORKSPACE_COLORS[2]}
         />
         <WorkspaceCard
@@ -88,6 +92,7 @@ const Dashboard = () => {
           total={getTotalForWorkspace(workspaces[3])}
           onUpdateSubItem={(pi, si, v) => updateSubItem(4, pi, si, v)}
           onToggleCollapse={(pi) => toggleProductCollapse(4, pi)}
+          onToggleAllCollapse={(c) => toggleAllProductsCollapse(4, c)}
           colorVar={WORKSPACE_COLORS[3]}
         />
       </div>

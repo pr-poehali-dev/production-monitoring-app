@@ -7,11 +7,14 @@ interface Props {
   total: number;
   onUpdateSubItem: (productIdx: number, subIdx: number, value: number) => void;
   onToggleCollapse: (productIdx: number) => void;
+  onToggleAllCollapse: (collapsed: boolean) => void;
   colorVar: string;
 }
 
-const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, colorVar }: Props) => {
+const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, onToggleAllCollapse, colorVar }: Props) => {
   const [expanded, setExpanded] = useState(false);
+  const allCollapsed = workspace.products.every((p) => p.collapsed);
+  const allExpanded = workspace.products.every((p) => !p.collapsed);
 
   return (
     <div
@@ -63,6 +66,15 @@ const WorkspaceCard = ({ workspace, total, onUpdateSubItem, onToggleCollapse, co
       {/* Expanded detail */}
       {expanded && (
         <div className="border-t border-border px-5 pb-5 pt-4 animate-fade-in">
+          <div className="flex justify-end mb-3">
+            <button
+              onClick={(e) => { e.stopPropagation(); onToggleAllCollapse(!allCollapsed); }}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+            >
+              <Icon name={allCollapsed ? 'ChevronsDown' : 'ChevronsUp'} size={13} />
+              {allCollapsed ? 'Развернуть все' : 'Свернуть все'}
+            </button>
+          </div>
           <div className="space-y-4">
             {workspace.products.map((product, pi) => {
               const productTotal = product.subItems.reduce((s, si) => s + si.value, 0);

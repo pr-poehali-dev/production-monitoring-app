@@ -72,6 +72,21 @@ export const useProductionData = () => {
     );
   };
 
+  const toggleAllProductsCollapse = (wsId: number, collapsed: boolean) => {
+    setWorkspaces((prev) =>
+      prev.map((ws) => {
+        if (ws.id !== wsId) return ws;
+        return { ...ws, products: ws.products.map((p) => ({ ...p, collapsed })) };
+      })
+    );
+  };
+
+  const updateHistoryRecord = (date: string, updatedWorkspaces: Workspace[]) => {
+    setHistory((prev) =>
+      prev.map((r) => (r.date === date ? { ...r, workspaces: JSON.parse(JSON.stringify(updatedWorkspaces)) } : r))
+    );
+  };
+
   const saveDay = () => {
     const today = getTodayKey();
     const record: DayRecord = { date: today, workspaces: JSON.parse(JSON.stringify(workspaces)) };
@@ -97,6 +112,8 @@ export const useProductionData = () => {
     lastSaved,
     updateSubItem,
     toggleProductCollapse,
+    toggleAllProductsCollapse,
+    updateHistoryRecord,
     saveDay,
     resetDay,
     getTotalForWorkspace,
