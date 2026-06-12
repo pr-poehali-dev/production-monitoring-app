@@ -1,0 +1,25 @@
+{
+  "name": "Золотой Рой",
+  "short_name": "Золотой Рой",
+  "description": "Система контроля производства",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e1420",
+  "theme_color": "#0e1420",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/936d0ba8-6d32-4b7c-a6b3-9be7de952f2d.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/936d0ba8-6d32-4b7c-a6b3-9be7de952f2d.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

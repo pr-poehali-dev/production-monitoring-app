@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ActivePage } from '@/types/production';
 import Icon from '@/components/ui/icon';
+import BeeHiveLogo from '@/components/BeeHiveLogo';
 import Dashboard from './Dashboard';
 import Statistics from './Statistics';
 import History from './History';
@@ -46,12 +47,7 @@ const Index = () => {
         {/* Logo */}
         <div className="px-4 py-4 border-b border-border">
           <div className="flex items-center gap-2.5">
-            <img
-              src="https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/150018e1-7d0c-4caa-a53e-1c0d8b5811f4.jpeg"
-              alt="Золотой рой"
-              className="w-9 h-9 flex-shrink-0"
-              style={{ filter: 'invert(1) sepia(1) saturate(3) hue-rotate(170deg) brightness(1.4)' }}
-            />
+            <BeeHiveLogo size={36} className="text-primary flex-shrink-0" />
             <div>
               <p className="text-xs font-bold text-foreground tracking-wide leading-none">ЗОЛОТОЙ РОЙ</p>
               <p className="text-[10px] text-muted-foreground tracking-widest uppercase leading-none mt-0.5">Контроль</p>
@@ -99,12 +95,7 @@ const Index = () => {
             <Icon name="Menu" size={20} />
           </button>
           <div className="flex items-center gap-2">
-            <img
-              src="https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/150018e1-7d0c-4caa-a53e-1c0d8b5811f4.jpeg"
-              alt="logo"
-              className="w-6 h-6"
-              style={{ filter: 'invert(1) sepia(1) saturate(3) hue-rotate(170deg) brightness(1.4)' }}
-            />
+            <BeeHiveLogo size={24} className="text-primary" />
             <span className="text-sm font-bold tracking-wide">ЗОЛОТОЙ РОЙ</span>
           </div>
           <div className="w-8" />

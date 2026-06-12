@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ПроизводствоКонтроль</title>
+    <title>Золотой Рой</title>
     <meta name="description" content="Система контроля производства"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <meta name="author" content="poehali.dev"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Золотой Рой"/>
+    <meta name="theme-color" content="#0e1420"/>
+    <link rel="apple-touch-icon" href="https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/936d0ba8-6d32-4b7c-a6b3-9be7de952f2d.jpg"/>
     <meta property="og:title" content="Поехали!">
     <meta property="og:description" content="Ваш личный программист, который делает сайты в 30 раз быстрее обычного.">
     <meta property="og:image:width" content="4800">
@@ -33,6 +42,13 @@
 <body>
 <div id="root"></div>
 <script type="module" src="/src/main.tsx"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js');
+    });
+  }
+</script>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
