@@ -94,7 +94,8 @@ const Dashboard = () => {
 
       {/* Summary bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {workspaces.map((ws, i) => {
+        {[workspaces[0], workspaces[2], workspaces[1], workspaces[3]].map((ws) => {
+          const i = ws.id - 1;
           const t = getTotalForWorkspace(ws);
           const pct = grandTotal > 0 ? Math.round((t / grandTotal) * 100) : 0;
           return (
