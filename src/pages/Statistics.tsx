@@ -3,10 +3,10 @@ import Icon from '@/components/ui/icon';
 import { PRODUCT_NAMES } from '@/types/production';
 
 const WORKSPACE_COLORS = [
-  '43 95% 54%',
-  '34 88% 50%',
-  '28 78% 44%',
-  '19 68% 38%',
+  '199 89% 48%',
+  '159 60% 45%',
+  '38 92% 50%',
+  '280 60% 58%',
 ];
 
 const Statistics = () => {

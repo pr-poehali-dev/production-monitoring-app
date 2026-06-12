@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import { ActivePage } from '@/types/production';
+import Icon from '@/components/ui/icon';
 import Dashboard from './Dashboard';
 import Statistics from './Statistics';
 import History from './History';
 import Settings from './Settings';
 import ExportPage from './ExportPage';
+import Salary from './Salary';
 
-const NAV_ITEMS: { id: ActivePage; label: string; emoji: string }[] = [
-  { id: 'dashboard', label: 'Панель', emoji: '🐝' },
-  { id: 'statistics', label: 'Статистика', emoji: '📊' },
-  { id: 'history', label: 'История', emoji: '🗂️' },
-  { id: 'export', label: 'Экспорт', emoji: '📥' },
-  { id: 'settings', label: 'Настройки', emoji: '⚙️' },
+const NAV_ITEMS: { id: ActivePage; label: string; icon: string }[] = [
+  { id: 'dashboard', label: 'Производство', icon: 'LayoutDashboard' },
+  { id: 'salary', label: 'Зарплата', icon: 'Wallet' },
+  { id: 'statistics', label: 'Статистика', icon: 'BarChart2' },
+  { id: 'history', label: 'История', icon: 'Archive' },
+  { id: 'export', label: 'Экспорт', icon: 'Download' },
+  { id: 'settings', label: 'Настройки', icon: 'Settings' },
 ];
 
 const Index = () => {
@@ -21,6 +24,7 @@ const Index = () => {
   const renderPage = () => {
     switch (page) {
       case 'dashboard': return <Dashboard />;
+      case 'salary': return <Salary />;
       case 'statistics': return <Statistics />;
       case 'history': return <History />;
       case 'export': return <ExportPage />;
@@ -40,11 +44,15 @@ const Index = () => {
         `}
       >
         {/* Logo */}
-        <div className="px-5 py-5 border-b border-border">
+        <div className="px-4 py-4 border-b border-border">
           <div className="flex items-center gap-2.5">
-            <span className="text-2xl leading-none">🍯</span>
+            <img
+              src="https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/e481c903-2b60-4f76-8d22-a6bb61f48b5a.jpeg"
+              alt="Золотой рой"
+              className="w-9 h-9 rounded object-cover flex-shrink-0"
+            />
             <div>
-              <p className="text-xs font-bold text-foreground tracking-wide leading-none">ПРОИЗВОДСТВО</p>
+              <p className="text-xs font-bold text-foreground tracking-wide leading-none">ЗОЛОТОЙ РОЙ</p>
               <p className="text-[10px] text-muted-foreground tracking-widest uppercase leading-none mt-0.5">Контроль</p>
             </div>
           </div>
@@ -62,7 +70,7 @@ const Index = () => {
                   : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
-              <span className="text-base leading-none">{item.emoji}</span>
+              <Icon name={item.icon} size={16} />
               {item.label}
             </button>
           ))}
@@ -86,12 +94,16 @@ const Index = () => {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar mobile */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border bg-card">
-          <button onClick={() => setSidebarOpen(true)} className="text-muted-foreground hover:text-foreground text-xl">
-            ☰
+          <button onClick={() => setSidebarOpen(true)} className="text-muted-foreground hover:text-foreground">
+            <Icon name="Menu" size={20} />
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-lg">🍯</span>
-            <span className="text-sm font-bold tracking-wide">ПРОИЗВОДСТВО</span>
+            <img
+              src="https://cdn.poehali.dev/projects/3527bc2d-caaa-45c4-a76d-713ddff9e895/bucket/e481c903-2b60-4f76-8d22-a6bb61f48b5a.jpeg"
+              alt="logo"
+              className="w-6 h-6 rounded object-cover"
+            />
+            <span className="text-sm font-bold tracking-wide">ЗОЛОТОЙ РОЙ</span>
           </div>
           <div className="w-8" />
         </header>

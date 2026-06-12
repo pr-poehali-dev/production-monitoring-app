@@ -3,10 +3,10 @@ import WorkspaceCard from '@/components/WorkspaceCard';
 import Icon from '@/components/ui/icon';
 
 const WORKSPACE_COLORS = [
-  '43 95% 54%',
-  '34 88% 50%',
-  '28 78% 44%',
-  '19 68% 38%',
+  '199 89% 48%',
+  '159 60% 45%',
+  '38 92% 50%',
+  '280 60% 58%',
 ];
 
 const getTodayFormatted = () => {
@@ -48,14 +48,14 @@ const Dashboard = () => {
             onClick={saveDay}
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            <span>🍯</span>
+            <Icon name="Save" size={15} />
             Сохранить день
           </button>
           <button
             onClick={resetDay}
             className="flex items-center gap-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-border transition-colors"
           >
-            <span>🔄</span>
+            <Icon name="RotateCcw" size={15} />
           </button>
         </div>
       </div>
